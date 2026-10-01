@@ -1,0 +1,77 @@
+@baseUrl = http://127.0.0.1:8000
+
+### ==========================================
+### MÓDULO: PRODUCTOS
+### ==========================================
+
+### 1. Crear Producto
+### Esperado: 201 Created
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Mesa de Oficina",
+  "categoria": "MUE-01",
+  "precio": 250.50,
+  "stock": 10,
+  "stock_minimo": 3,
+  "activo": true
+}
+
+
+### 2. Listar Productos
+### Esperado: 200 OK
+GET {{baseUrl}}/productos/?skip=0&limit=10
+
+
+### 3. Obtener Producto por ID
+### Esperado: 200 OK
+GET {{baseUrl}}/productos/1
+
+
+### 4. Actualizar Producto
+### Reemplazo total
+### Esperado: 200 OK
+PUT {{baseUrl}}/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Mesa de Oficina Actualizada",
+  "categoria": "MUE-01",
+  "precio": 280.50,
+  "stock": 15,
+  "stock_minimo": 5,
+  "activo": true
+}
+
+
+### 5. Consultar Estado de Stock
+### Esperado: 200 OK
+GET {{baseUrl}}/productos/1/stock
+
+
+### 6. Desactivar Producto
+### Borrado lógico
+### Esperado: 200 OK
+PUT {{baseUrl}}/productos/1/desactivar
+
+
+### 7. Obtener Producto Inexistente
+### Esperado: 404 Not Found
+GET {{baseUrl}}/productos/999
+
+
+### 8. Crear Producto con Datos Inválidos
+### Esperado: 422 Unprocessable Entity
+### La categoría no cumple el formato y el precio es negativo
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Producto Inválido",
+  "categoria": "MUEBLES",
+  "precio": -50.00,
+  "stock": 5,
+  "stock_minimo": 5,
+  "activo": true
+}
