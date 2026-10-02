@@ -75,3 +75,73 @@ Content-Type: application/json
   "stock_minimo": 5,
   "activo": true
 }
+
+### 9. Crear Producto con Precio Cero
+### Esperado: 201 Created
+### Verifica que precio=0 sea válido (ge=0)
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Producto Precio Cero",
+  "categoria": "MUE-02",
+  "precio": 0,
+  "stock": 10,
+  "stock_minimo": 3,
+  "activo": true
+}
+
+
+### 10. Crear Producto con Nombre Vacío
+### Esperado: 422 Unprocessable Entity
+### Verifica min_length=1
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "categoria": "MUE-03",
+  "precio": 100,
+  "stock": 5,
+  "stock_minimo": 2,
+  "activo": true
+}
+
+
+### 11. Crear Producto con Nombre Duplicado
+### Esperado: 409 Conflict
+### Verifica que no se permitan nombres duplicados
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Mesa de Oficina",
+  "categoria": "MUE-04",
+  "precio": 300,
+  "stock": 8,
+  "stock_minimo": 2,
+  "activo": true
+}
+
+
+### 12. Crear Producto para DELETE
+### Esperado: 201 Created
+POST {{baseUrl}}/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Producto Para Eliminar",
+  "categoria": "MUE-05",
+  "precio": 150,
+  "stock": 5,
+  "stock_minimo": 2,
+  "activo": true
+}
+
+### 13. Eliminar Producto
+### Esperado: 204 No Content
+DELETE {{baseUrl}}/productos/3
+
+### 14. Eliminar Producto Inexistente
+### Esperado: 404 Not Found
+DELETE {{baseUrl}}/productos/999999

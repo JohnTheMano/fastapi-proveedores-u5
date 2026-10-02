@@ -97,6 +97,26 @@ def borrado_logico(
     return desactivado
 
 
+# ---------------------------------------------------------
+# BORRADO FÍSICO
+# Método: DELETE | Endpoint: /productos/{id} | Estado: 204 No Content
+# ---------------------------------------------------------
+@router.delete(
+    "/{id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def eliminar_producto(
+    session: SessionDep,
+    id: int = Path(..., gt=0)
+):
+    eliminado = services.eliminar(session, id)
+
+    if not eliminado:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Producto no encontrado"
+        )
+
 
 
 # ---------------------------------------------------------

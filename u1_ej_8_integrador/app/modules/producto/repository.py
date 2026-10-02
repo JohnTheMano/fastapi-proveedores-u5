@@ -30,6 +30,13 @@ def obtener_por_id(
 ) -> Optional[Producto]:
     return session.get(Producto, id)
 
+def obtener_por_nombre(
+    session: Session,
+    nombre: str
+) -> Optional[Producto]:
+    return session.exec(
+        select(Producto).where(Producto.nombre == nombre)
+    ).first()
 
 def actualizar(
     session: Session,
@@ -40,6 +47,12 @@ def actualizar(
     session.refresh(producto)
     return producto
 
+def eliminar(
+    session: Session,
+    producto: Producto
+) -> None:
+    session.delete(producto)
+    session.commit()
 
 def desactivar(
     session: Session,
